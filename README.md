@@ -59,3 +59,6 @@ flowchart TD
     B --> F[Seleccionar tarea]
     F --> G[Editar o eliminar]
     G --> B
+```
+## Investigacion
+[RESEARCH.md](RESEARCH.md)
