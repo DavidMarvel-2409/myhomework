@@ -47,7 +47,7 @@ La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
 
 ---
 
-## 🔄 Diagrama de flujo
+## Diagrama de flujo
 
 ```mermaid
 flowchart TD
