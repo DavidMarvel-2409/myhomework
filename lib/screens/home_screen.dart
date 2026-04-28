@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/homework_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -39,15 +40,13 @@ class HomeScreen extends StatelessWidget {
                 itemCount: task.length,
                 itemBuilder: (context, index) {
                   final currentTask = task[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text(currentTask['title']!),
-                      subtitle: Text(currentTask['subject']!),
-                      trailing: Text(currentTask['date']!),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/detail');
-                      },
-                    ),
+                  return HomeworkCard(
+                    title: currentTask['title']!,
+                    subject: currentTask['subject']!,
+                    date: currentTask['date']!,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/detail');
+                    },
                   );
                 },
               ),
