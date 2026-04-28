@@ -6,6 +6,27 @@ MyHomework es una aplicación móvil diseñada para ayudar a estudiantes a organ
 La aplicación permite registrar actividades con fechas límite, descripciones y niveles de prioridad, además de generar recordatorios automáticos para evitar olvidos y mejorar la planificación del tiempo.
 
 ---
+##  Instrucciones de Uso
+1. Al iniciar la aplicación, se muestr la pantalla principal con una lista de tareas simuladas.
+2. Cada tarea se presenta en formato de targeta con título, asignatura y fecha.
+3. Al presionar una tarea, se accede a la pantalla de detalle.
+4. El boton "+" permite acceder a la pantalla de creación de tareas.
+5. Actualmente, las funcionalidades utilizan datos de ejemplo y no se almacenan de forma persistente.
+
+---
+
+## Estado actual del proyecto
+
+Este proyecto corresponde a un avance inicial que incluye:
+
+Estructura base del proyecto en Flutter
+Navegación entre pantallas (Home, Crear, Detalle)
+Interfaz inicial con lista de tareas
+Componentes reutilizables (HomeworkCard)
+
+Las funcionalidades completas como almacenamiento de datos y recordatorios serán implementadas en futuras etapas.
+
+---
 
 ## Características del dispositivo móvil
 La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
