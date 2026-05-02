@@ -135,7 +135,7 @@ flowchart TD
     I --> J[Formulario de creación]
     J --> B
 
-    B --> K[Menú lateral (Drawer)]
+    B --> K[Menú lateral - Drawer]
 
     K --> L[Perfil]
     K --> M[Sobre la app]
