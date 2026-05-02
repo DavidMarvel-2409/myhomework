@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/app_drawer.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
@@ -9,6 +10,7 @@ class DetailScreen extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(title: const Text("Detalles de tarea")),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -24,30 +26,27 @@ class DetailScreen extends StatelessWidget {
               children: [
                 Text(
                   task['title']!,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
 
                 const SizedBox(height: 15),
 
                 Text(
                   "Asignatura: ${task['subject']}",
-                  style: const TextStyle(fontSize: 16),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
 
                 const SizedBox(height: 10),
 
                 Text(
                   "Fecha de entrega: ${task['date']}",
-                  style: const TextStyle(fontSize: 16),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 15),
 
-                const Text(
+                Text(
                   "Descripción:",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
 
                 const SizedBox(height: 5),
@@ -55,6 +54,7 @@ class DetailScreen extends StatelessWidget {
                   task['description']!.isEmpty
                       ? "Sin descripción"
                       : task['description']!,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),

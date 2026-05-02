@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/homework_card.dart';
+import '../widgets/app_drawer.dart';
 
 class CalendarDetailScreen extends StatelessWidget {
   const CalendarDetailScreen({super.key});
@@ -14,7 +15,13 @@ class CalendarDetailScreen extends StatelessWidget {
     final List tasks = args['tasks'];
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Detalle del día")),
+      drawer: const AppDrawer(),
+      appBar: AppBar(
+        title: Text(
+          "Detalle del día",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
       // body: Center(
       //   child: Text(
       //     "Seleccionaste: ${selectedDay.day}/${selectedDay.month}/${selectedDay.year}",
@@ -27,7 +34,7 @@ class CalendarDetailScreen extends StatelessWidget {
           children: [
             Text(
               "Tareas para ${selectedDay.day}/${selectedDay.month}/${selectedDay.year}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 15),
             if (tasks.isEmpty) const Text("No hay tareas para este dia"),

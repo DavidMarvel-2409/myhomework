@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/app_drawer.dart';
 
 class CreateScreen extends StatelessWidget {
   CreateScreen({super.key});
@@ -11,6 +12,7 @@ class CreateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(title: Text("Crear tarea")),
       body: Padding(
         padding: const EdgeInsets.all(16),

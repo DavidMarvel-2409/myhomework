@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/homework_card.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../widgets/app_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -52,26 +53,38 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("MyHomework"), centerTitle: true),
+      drawer: const AppDrawer(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/app_icon.png', width: 30, height: 30),
+            const SizedBox(width: 8),
+            const Text("MyHomework"),
+          ],
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Bienvenid@ a MyHomework",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
 
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 "Gestiona tus tareas, revisa fechas de entrega y organiza tu estudio.",
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 "Tareas pendientes",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 10),
               ListView.builder(
