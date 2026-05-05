@@ -13,7 +13,6 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Avatar
             const CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('assets/images/user_image.png'),
@@ -21,12 +20,10 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 15),
 
-            // Nombre
             Text("David Marvel", style: Theme.of(context).textTheme.titleLarge),
 
             const SizedBox(height: 5),
 
-            // Email
             Text(
               "david.marvel.programer.2409@email.com",
               style: Theme.of(context).textTheme.titleMedium,
@@ -34,7 +31,6 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // Opciones
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("Configuración"),
