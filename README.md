@@ -20,28 +20,28 @@ La aplicación permite registrar actividades con fechas límite, descripciones y
 ---
 
 ## Instrucciones de uso
-1. Al iniciar la aplicación, se muestra la pantalla principal con una lista de tareas.
-2. Cada tarea se presenta en formato de tarjeta con título, asignatura y fecha.
-3. Al presionar una tarea, se accede a la pantalla de detalle con información completa.
-4. El botón "+" permite acceder a la pantalla de creación de nuevas tareas.
-5. También es posible visualizar tareas por fecha utilizando el calendario integrado.
-6. Actualmente, las funcionalidades utilizan datos de ejemplo y no se almacenan de forma persistente.
+1. Al iniciar la aplicación, se muestra una pantalla de inicio (Splash Screen).
+2. Luego se accede a la pantalla principal con la lista de tareas.
+3. Cada tarea se presenta en formato de tarjeta con título, asignatura y fecha.
+4. Al presionar una tarea, se accede a la pantalla de detalle.
+5. El botón "+" permite acceder a la pantalla de creación de nuevas tareas.
+6. El menú lateral (Drawer) permite navegar entre las distintas secciones.
+7. Actualmente, las funcionalidades utilizan datos simulados y no se almacenan de forma persistente.
 
 ---
 
 ## Estado actual del proyecto
 
-El proyecto actualmente cuenta con una implementación funcional del flujo principal de la aplicación, incluyendo:
+El proyecto corresponde a una maqueta funcional, que implementa el flujo principal de la aplicación:
 
-- Pantalla de inicio (Splash Screen)
-- Pantalla principal con listado de tareas
-- Calendario interactivo con visualización de tareas por fecha
-- Pantalla de creación de tareas
-- Pantalla de detalle de tareas
+- Splash Screen inicial
+- Listado de tareas
+- Visualización de tareas en calendario
+- Creación de tareas
+- Pantalla de detalle
+- Pantallas adicionales (Perfil, Ayuda, Sobre la app)
 - Navegación completa mediante Drawer
 - Uso de Theme global para consistencia visual
-
-Las tareas aún no se almacenan de forma persistente y se utilizan datos simulados.
 
 ---
 
@@ -50,20 +50,30 @@ Las tareas aún no se almacenan de forma persistente y se utilizan datos simulad
 El proyecto sigue una estructura modular basada en Flutter:
 
 - **screens/**: contiene todas las pantallas de la aplicación
-- **widgets/**: componentes reutilizables como tarjetas de tareas y menú lateral
-- **main.dart**: punto de entrada con configuración de rutas y Theme global
+- **widgets/**: componentes reutilizables (tarjetas, drawer, etc.)
+- **main.dart**: punto de entrada de la aplicación
+- **app_routes.dart**: configuración de rutas y navegación
 
-Se utiliza el patrón de navegación basado en rutas (`Navigator`) y paso de parámetros entre pantallas.
+Se utiliza navegación basada en rutas mediante (`Navigator`), permitiendo la transición entre pantallas y el flujo de la aplicación.
+
+---
+
+## Datos de ejemplo
+La aplicación utiliza datos simulados para representar tareas, incluyendo:
+- Título de la tarea
+- Asignatura
+- Fecha de entrega
+Estos datos permiten demostrar el funcionamiento de la interfaz sin requerir persistencia.
 
 ---
 
 ## Características del dispositivo móvil
 La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
 
-- Notificaciones para recordatorios de tareas
-- Acceso rápido desde cualquier lugar
 - Interfaz táctil intuitiva
-- Posibilidad de almacenamiento local de datos
+- Acceso rápido desde cualquier lugar
+- Organización visual de datos
+- Simulación de recordatorios
 
 ---
 
@@ -102,15 +112,17 @@ La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
 - No existe persistencia de datos (las tareas no se guardan)
 - No se implementan notificaciones reales
 - No se pueden editar ni eliminar tareas
+- Los datos utilizados son simulados
 
 ---
 
 ## Tecnologías utilizadas
 
-- Flutter
-- Dart
-- Material Design
-- TableCalendar (para visualización de calendario)
+- Flutter (framework de desarrollo multiplataforma)
+- Dart (lenguaje de programación)
+- Material Design (sistema de diseño)
+- Navigator (gestión de rutas)
+- TableCalendar (visualización de calendario)
 
 ---
 
