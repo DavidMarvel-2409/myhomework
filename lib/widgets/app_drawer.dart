@@ -29,63 +29,62 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
 
-          // 🏠 Home
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Inicio'),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/home');
+              _navigate(context, '/home');
             },
           ),
 
-          // ➕ Crear tarea
           ListTile(
             leading: const Icon(Icons.add),
             title: const Text('Crear tarea'),
             onTap: () {
-              Navigator.pushNamed(context, '/create');
+              _navigate(context, '/create');
             },
           ),
 
-          // 📅 Calendario (opcional: vuelve al home)
           ListTile(
             leading: const Icon(Icons.calendar_today),
             title: const Text('Calendario'),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/home');
+              _navigate(context, '/home');
             },
           ),
 
           const Divider(),
 
-          // 👤 Perfil
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
             onTap: () {
-              Navigator.pushNamed(context, '/profile');
+              _navigate(context, '/profile');
             },
           ),
 
-          // ℹ️ About
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text('Sobre la app'),
             onTap: () {
-              Navigator.pushNamed(context, '/about');
+              _navigate(context, '/about');
             },
           ),
 
-          // ❓ Ayuda
           ListTile(
             leading: const Icon(Icons.help),
             title: const Text('Ayuda'),
             onTap: () {
-              Navigator.pushNamed(context, '/help');
+              _navigate(context, '/help');
             },
           ),
         ],
       ),
     );
   }
+}
+
+void _navigate(BuildContext context, String route) {
+  Navigator.pop(context); // cierra el drawer
+  Navigator.pushReplacementNamed(context, route);
 }
