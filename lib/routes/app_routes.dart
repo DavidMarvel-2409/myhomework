@@ -7,6 +7,7 @@ import '../screens/splash_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/about_screen.dart';
 import '../screens/help_screen.dart';
+import '../screens/notification_poc_screen.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {
@@ -18,5 +19,6 @@ class AppRoutes {
     '/profile': (context) => const ProfileScreen(),
     '/about': (context) => const AboutScreen(),
     '/help': (context) => const HelpScreen(),
+    '/poc_notifications': (context) => const NotificationPoCScreen(),
   };
 }

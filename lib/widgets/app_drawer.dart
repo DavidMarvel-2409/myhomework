@@ -78,6 +78,13 @@ class AppDrawer extends StatelessWidget {
               _navigate(context, '/help');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.notifications),
+            title: const Text('PoC Notificaciones'),
+            onTap: () {
+              _navigate(context, '/poc_notifications');
+            },
+          ),
         ],
       ),
     );
