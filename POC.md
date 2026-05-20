@@ -15,7 +15,7 @@ Sistema de gestión y recordatorios académicos desarrollado en Flutter.
 # Rama de desarrollo
 
 ```bash
-feature/poc_notifications
+feature/poc_notificaciones_locales
 ```
 ---
 

@@ -57,6 +57,19 @@ El proyecto sigue una estructura modular basada en Flutter:
 Se utiliza navegación basada en rutas mediante (`Navigator`), permitiendo la transición entre pantallas y el flujo de la aplicación.
 
 ---
+## Estructura del proyecto
+
+```text
+lib/
+├── models/
+├── routes/
+├── screens/
+├── services/
+├── widgets/
+├── app.dart
+└── main.dart
+```
+---
 
 ## Datos de ejemplo
 La aplicación utiliza datos simulados para representar tareas, incluyendo:
@@ -157,5 +170,232 @@ flowchart TD
     M --> B
     N --> B
 ```
+---
 ## Investigacion
 [RESEARCH.md](RESEARCH.md)
+---
+# Arquitectura y Modelado
+
+Como parte del proceso de validación técnica y diseño de la solución móvil, se desarrollaron distintos artefactos de ingeniería de software orientados a modelar:
+
+- Separación de responsabilidades.
+- Flujo asíncrono de la aplicación.
+- Gestión de estados críticos.
+- Integración entre Flutter y servicios nativos Android.
+---
+# Artefactos de Ingeniería de Software
+---
+## Diagrama Estructural
+```mermaid
+graph TD
+
+%% =========================
+%% CAPA DE PRESENTACIÓN
+%% =========================
+subgraph Presentacion["Capa de Presentación (Flutter UI)"]
+    HS[HomeScreen]
+    CS[CreateScreen]
+    DS[DetailScreen]
+    CDS[CalendarDetailScreen]
+    PS[ProfileScreen]
+    AS[AboutScreen]
+    HES[HelpScreen]
+    SPL[SplashScreen]
+end
+
+%% =========================
+%% WIDGETS REUTILIZABLES
+%% =========================
+subgraph Widgets["Widgets UI Reutilizables"]
+    DW[AppDrawer]
+    HC[HomeworkCard]
+end
+
+%% =========================
+%% NAVEGACIÓN
+%% =========================
+subgraph Routing["Capa de Navegación"]
+    AR[AppRoutes]
+    NAV[Navigator]
+end
+
+%% =========================
+%% MODELO DE DATOS
+%% =========================
+subgraph Modelos["Modelo de Dominio (Simple)"]
+    HW[Homework]
+    TASKS["Tasks (Map / List en memoria)"]
+end
+
+%% =========================
+%% FRAMEWORK / EXTERNOS
+%% =========================
+subgraph Framework["Framework / Librerías"]
+    FLUTTER[Flutter Material]
+    CAL[TableCalendar]
+end
+
+%% =========================
+%% RELACIONES
+%% =========================
+
+%% Screens usan widgets
+HS --> HC
+HS --> DW
+CS --> DW
+DS --> DW
+CDS --> DW
+PS --> DW
+AS --> DW
+HES --> DW
+SPL --> FLUTTER
+
+%% Navegación
+HS --> NAV
+CS --> NAV
+DS --> NAV
+CDS --> NAV
+PS --> NAV
+AS --> NAV
+HES --> NAV
+NAV --> AR
+
+%% Datos
+HS --> TASKS
+CDS --> TASKS
+TASKS --> HW
+
+%% Framework
+HS --> CAL
+HS --> FLUTTER
+CS --> FLUTTER
+DS --> FLUTTER
+CDS --> FLUTTER
+PS --> FLUTTER
+AS --> FLUTTER
+HES --> FLUTTER
+```
+---
+## Diagrama de Secuencia
+
+```mermaid
+sequenceDiagram
+
+actor Usuario
+
+participant Home as HomeScreen
+participant CreateScreen as CrearTareaScreen
+participant Detail as DetailScreen
+participant Calendar as CalendarDetailScreen
+participant Store as TaskMemory
+participant Navigator as FlutterNavigator
+
+%% =========================
+%% INICIO APP
+%% =========================
+Usuario->>Home: Abre aplicación
+Home->>Store: Cargar tareas en memoria
+Store-->>Home: Lista de tareas
+Home-->>Usuario: Renderiza UI
+
+%% =========================
+%% VER DETALLE
+%% =========================
+Usuario->>Home: Selecciona tarea
+Home->>Navigator: pushNamed('/detail', task)
+Navigator->>DetailScreen: Enviar argumentos
+DetailScreen-->>Usuario: Mostrar detalle
+
+%% =========================
+%% CREAR TAREA
+%% =========================
+Usuario->>Home: Presiona botón "+"
+Home->>Navigator: pushNamed('/create')
+Navigator->>CreateScreen: Abrir formulario
+
+Usuario->>CreateScreen: Ingresa datos
+CreateScreen->>Navigator: pop(newTask)
+Navigator->>Home: Retorna resultado
+
+Home->>Store: Agregar tarea
+Home-->>Usuario: UI actualizada
+
+%% =========================
+%% CALENDARIO
+%% =========================
+Usuario->>Home: Selecciona día
+Home->>Store: Filtrar por fecha
+Store-->>Home: Tareas del día
+Home->>Navigator: pushNamed('/calendar_detail', args)
+Navigator->>CalendarDetailScreen: Mostrar datos
+
+CalendarDetailScreen-->>Usuario: Mostrar lista
+```
+---
+## Diagrama de estados
+
+```mermaid
+stateDiagram-v2
+
+[*] --> SplashScreen
+
+SplashScreen --> HomeScreen: App inicia
+
+state HomeScreen {
+    [*] --> Reposo
+
+    Reposo --> CreateScreen: "+"
+    Reposo --> DetailScreen: seleccionar tarea
+    Reposo --> CalendarScreen: abrir calendario
+    Reposo --> ProfileScreen: drawer
+    Reposo --> HelpScreen: drawer
+    Reposo --> AboutScreen: drawer
+}
+
+CreateScreen --> HomeScreen: guardar tarea
+DetailScreen --> HomeScreen: back
+CalendarScreen --> CalendarDetailScreen: seleccionar día
+CalendarDetailScreen --> HomeScreen: back
+
+state NotificationPoC {
+    [*] --> Idle
+    Idle --> Permisos: inicialización plugin
+    Permisos --> Programada: scheduleNotification()
+    Programada --> Espera
+    Espera --> Disparada: Android OS
+    Disparada --> Mostrada
+}
+
+HomeScreen --> NotificationPoC: trigger desde UI
+NotificationPoC --> HomeScreen: retorno flujo
+```
+---
+## Matriz de Dependencias Técnicas
+
+| Dominio de necesidad | Tecnología seleccionada | Justificación técnica |
+|----------------------|--------------------------|------------------------|
+| Gestión de notificaciones locales en dispositivo | flutter_local_notifications | Se adopta este plugin debido a su madurez en ecosistema Flutter, soporte activo y capacidad de abstracción sobre el Notification Manager nativo de Android/iOS. Permite programación de notificaciones síncronas y diferidas sin dependencia de servicios backend, reduciendo acoplamiento con infraestructura externa. |
+| Interfaz de usuario multiplataforma | Flutter (Material Design) | Framework oficial de Google que garantiza consistencia UI/UX entre Android e iOS. Su motor de renderizado propio reduce dependencia del sistema operativo, mejorando portabilidad y control del ciclo de vida de la UI. |
+| Gestión de estado de la aplicación | setState y datos en memoria | Se utiliza gestión de estado local simplificada adecuada para una maqueta funcional y pruebas de navegación entre pantallas. |
+| Arquitectura de lógica de negocio | Arquitectura modular basada en capas | Se separan responsabilidades entre pantallas, widgets reutilizables, rutas y servicios, permitiendo escalabilidad progresiva hacia arquitecturas más robustas como MVVM. |
+| Acceso a sistema operativo (notificaciones nativas) | Android Notification Manager | Componente nativo del sistema operativo responsable de la ejecución de notificaciones. Su uso indirecto mediante plugins permite mantener independencia del framework Flutter mientras se conserva acceso a capacidades del SO. |
+| Persistencia temporal de datos (modelo en memoria) | TaskModel en memoria | Se utiliza almacenamiento en memoria como decisión deliberada de PoC, eliminando dependencia de BaaS o bases de datos para enfocar la validación en la viabilidad de notificaciones asíncronas. |
+---
+
+## Proof of Concept (PoC)
+La validación técnica de notificaciones locales fue desarrollada en la rama:
+
+feature/poc_notificaciones_locales
+
+Documentación completa disponible en:
+
+[POC.md](POC.md)
+
+---
+
+## Autor
+
+Desarrollado por David Valdés Hernández  
+Proyecto académico — Programación de Dispositivos Móviles
+
+---
