@@ -18,7 +18,10 @@ class HelpScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             ExpansionTile(
-              leading: const Icon(Icons.home),
+              leading: Icon(
+                Icons.home,
+                color: Theme.of(context).iconTheme.color,
+              ),
               title: const Text("¿Qué puedo hacer en la pantalla principal?"),
               children: const [
                 Padding(
@@ -31,7 +34,10 @@ class HelpScreen extends StatelessWidget {
             ),
 
             ExpansionTile(
-              leading: const Icon(Icons.add),
+              leading: Icon(
+                Icons.add,
+                color: Theme.of(context).iconTheme.color,
+              ),
               title: const Text("¿Cómo agrego una tarea?"),
               children: const [
                 Padding(
@@ -44,7 +50,10 @@ class HelpScreen extends StatelessWidget {
             ),
 
             ExpansionTile(
-              leading: const Icon(Icons.person),
+              leading: Icon(
+                Icons.person,
+                color: Theme.of(context).iconTheme.color,
+              ),
               title: const Text("¿Cómo edito mi perfil?"),
               children: const [
                 Padding(
@@ -57,7 +66,10 @@ class HelpScreen extends StatelessWidget {
             ),
 
             ExpansionTile(
-              leading: const Icon(Icons.notifications),
+              leading: Icon(
+                Icons.notifications,
+                color: Theme.of(context).iconTheme.color,
+              ),
               title: const Text("¿Cómo funcionan las notificaciones?"),
               children: const [
                 Padding(
@@ -79,7 +91,10 @@ class HelpScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             ListTile(
-              leading: const Icon(Icons.email),
+              leading: Icon(
+                Icons.email,
+                color: Theme.of(context).iconTheme.color,
+              ),
               title: const Text("Contacto"),
               subtitle: const Text("soporte@myhomework.com"),
             ),

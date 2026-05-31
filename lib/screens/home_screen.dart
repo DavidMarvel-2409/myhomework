@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('assets/images/app_icon.png', width: 30, height: 30),
+            Image.asset('assets/images/app_icon2.png', width: 30, height: 30),
             const SizedBox(width: 8),
             const Text("MyHomework"),
           ],
@@ -108,59 +108,91 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
 
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: task.length,
-              //     itemBuilder: (context, index) {
-              //       final currentTask = task[index];
-              //       return HomeworkCard(
-              //         title: currentTask['title']!,
-              //         subject: currentTask['subject']!,
-              //         date: currentTask['date']!,
-              //         onTap: () {
-              //           Navigator.pushNamed(context, '/detail');
-              //         },
-              //       );
-              //     },
-              //   ),
-              // ),
               const SizedBox(height: 10),
               SizedBox(
                 height: 350,
-                child: TableCalendar(
-                  rowHeight: 40,
-                  firstDay: DateTime.utc(2020, 1, 1),
-                  lastDay: DateTime.utc(2100, 12, 31),
-                  focusedDay: DateTime.now(),
-                  headerStyle: HeaderStyle(
-                    formatButtonVisible: false,
-                    titleCentered: true,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(12),
                   ),
+                  padding: const EdgeInsets.all(12),
+                  child: TableCalendar(
+                    rowHeight: 40,
+                    firstDay: DateTime.utc(2020, 1, 1),
+                    lastDay: DateTime.utc(2100, 12, 31),
+                    focusedDay: DateTime.now(),
 
-                  eventLoader: (day) {
-                    final normalized = DateTime(day.year, day.month, day.day);
+                    headerStyle: HeaderStyle(
+                      formatButtonVisible: false,
+                      titleCentered: true,
+                      titleTextStyle: Theme.of(
+                        context,
+                      ).textTheme.titleMedium!.copyWith(color: Colors.white),
+                      leftChevronIcon: const Icon(
+                        Icons.chevron_left,
+                        color: Colors.white,
+                      ),
+                      rightChevronIcon: const Icon(
+                        Icons.chevron_right,
+                        color: Colors.white,
+                      ),
+                    ),
 
-                    return task.where((t) {
-                      final parsed = parseDate(t['date']!);
-                      return parsed.year == normalized.year &&
-                          parsed.month == normalized.month &&
-                          parsed.day == normalized.day;
-                    }).toList();
-                  },
+                    daysOfWeekStyle: const DaysOfWeekStyle(
+                      weekdayStyle: TextStyle(color: Colors.white),
+                      weekendStyle: TextStyle(color: Colors.white),
+                    ),
 
-                  onDaySelected: (selectedDay, focusedDay) {
-                    final tasksOfDay = task.where((t) {
-                      final parsed = parseDate(t['date']!);
-                      return parsed.year == selectedDay.year &&
-                          parsed.month == selectedDay.month &&
-                          parsed.day == selectedDay.day;
-                    }).toList();
-                    Navigator.pushNamed(
-                      context,
-                      '/calendar_detail',
-                      arguments: {'date': selectedDay, 'tasks': tasksOfDay},
-                    );
-                  },
+                    calendarStyle: CalendarStyle(
+                      defaultTextStyle: const TextStyle(color: Colors.white),
+                      weekendTextStyle: const TextStyle(color: Colors.white),
+                      outsideTextStyle: TextStyle(
+                        color: Colors.white..withValues(alpha: 0.4),
+                      ),
+
+                      todayDecoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        shape: BoxShape.circle,
+                      ),
+
+                      selectedDecoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        shape: BoxShape.circle,
+                      ),
+
+                      markerDecoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+
+                    eventLoader: (day) {
+                      final normalized = DateTime(day.year, day.month, day.day);
+
+                      return task.where((t) {
+                        final parsed = parseDate(t['date']!);
+                        return parsed.year == normalized.year &&
+                            parsed.month == normalized.month &&
+                            parsed.day == normalized.day;
+                      }).toList();
+                    },
+
+                    onDaySelected: (selectedDay, focusedDay) {
+                      final tasksOfDay = task.where((t) {
+                        final parsed = parseDate(t['date']!);
+                        return parsed.year == selectedDay.year &&
+                            parsed.month == selectedDay.month &&
+                            parsed.day == selectedDay.day;
+                      }).toList();
+
+                      Navigator.pushNamed(
+                        context,
+                        '/calendar_detail',
+                        arguments: {'date': selectedDay, 'tasks': tasksOfDay},
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -172,7 +204,7 @@ class HomeScreen extends StatelessWidget {
           final newTask = await Navigator.pushNamed(context, '/create');
 
           if (newTask != null) {
-            print(newTask);
+            // print(newTask);
           }
         },
         child: const Icon(Icons.add),

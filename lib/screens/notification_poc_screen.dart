@@ -11,10 +11,9 @@ class NotificationPoCScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
-            print("BOTON PRESIONADO");
             await NotificationService.showTestNotification();
 
-            print("NOTIFICACION ENVIADA");
+            if (!context.mounted) return;
 
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Notificación enviada")),

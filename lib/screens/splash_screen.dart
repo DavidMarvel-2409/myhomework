@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/app_icon.png', width: 120, height: 120),
+            Image.asset('assets/images/app_icon2.png', width: 120, height: 120),
             SizedBox(height: 20),
             Text("MyHomework", style: Theme.of(context).textTheme.titleLarge),
           ],

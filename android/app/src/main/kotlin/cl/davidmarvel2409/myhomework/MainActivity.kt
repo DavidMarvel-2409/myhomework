@@ -1,4 +1,4 @@
-package com.example.myhomework
+package cl.davidmarvel2409.myhomework
 
 import io.flutter.embedding.android.FlutterActivity
 

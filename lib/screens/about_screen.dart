@@ -13,7 +13,7 @@ class AboutScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            Image.asset('assets/images/app_icon.png', height: 100),
+            Image.asset('assets/images/app_icon2.png', height: 100),
 
             const SizedBox(height: 20),
 

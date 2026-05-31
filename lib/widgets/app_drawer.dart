@@ -5,82 +5,100 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Drawer(
+      backgroundColor: colors.secondary,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            decoration: BoxDecoration(color: Color.fromARGB(255, 39, 94, 130)),
             child: Row(
               children: [
                 Image.asset(
-                  'assets/images/app_icon.png',
+                  'assets/images/app_icon2.png',
                   width: 50,
                   height: 50,
                 ),
                 const SizedBox(width: 10),
-                const Text(
+                Text(
                   'MyHomework',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(
+                    color: colors.onPrimary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
           ),
 
           ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Inicio'),
+            leading: Icon(Icons.home, color: colors.onSecondary),
+            title: Text('Inicio', style: TextStyle(color: colors.onSecondary)),
             onTap: () {
               _navigate(context, '/home');
             },
           ),
 
           ListTile(
-            leading: const Icon(Icons.add),
-            title: const Text('Crear tarea'),
+            leading: Icon(Icons.add, color: colors.onSecondary),
+            title: Text(
+              'Crear tarea',
+              style: TextStyle(color: colors.onSecondary),
+            ),
             onTap: () {
               _navigate(context, '/create');
             },
           ),
 
           ListTile(
-            leading: const Icon(Icons.calendar_today),
-            title: const Text('Calendario'),
+            leading: Icon(Icons.calendar_today, color: colors.onSecondary),
+            title: Text(
+              'Calendario',
+              style: TextStyle(color: colors.onSecondary),
+            ),
             onTap: () {
               _navigate(context, '/home');
             },
           ),
 
-          const Divider(),
+          Divider(color: colors.onSecondary.withValues(alpha: 0.4)),
 
           ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Perfil'),
+            leading: Icon(Icons.person, color: colors.onSecondary),
+            title: Text('Perfil', style: TextStyle(color: colors.onSecondary)),
             onTap: () {
               _navigate(context, '/profile');
             },
           ),
 
           ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('Sobre la app'),
+            leading: Icon(Icons.info, color: colors.onSecondary),
+            title: Text(
+              'Sobre la app',
+              style: TextStyle(color: colors.onSecondary),
+            ),
             onTap: () {
               _navigate(context, '/about');
             },
           ),
 
           ListTile(
-            leading: const Icon(Icons.help),
-            title: const Text('Ayuda'),
+            leading: Icon(Icons.help, color: colors.onSecondary),
+            title: Text('Ayuda', style: TextStyle(color: colors.onSecondary)),
             onTap: () {
               _navigate(context, '/help');
             },
           ),
+
           ListTile(
-            leading: const Icon(Icons.notifications),
-            title: const Text('PoC Notificaciones'),
+            leading: Icon(Icons.notifications, color: colors.onSecondary),
+            title: Text(
+              'PoC Notificaciones',
+              style: TextStyle(color: colors.onSecondary),
+            ),
             onTap: () {
               _navigate(context, '/poc_notifications');
             },
