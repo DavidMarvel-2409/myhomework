@@ -75,6 +75,17 @@ class AppDrawer extends StatelessWidget {
           ),
 
           ListTile(
+            leading: Icon(Icons.settings, color: colors.onSecondary),
+            title: Text(
+              'Preferencias',
+              style: TextStyle(color: colors.onSecondary),
+            ),
+            onTap: () {
+              _navigate(context, '/preferences');
+            },
+          ),
+
+          ListTile(
             leading: Icon(Icons.info, color: colors.onSecondary),
             title: Text(
               'Sobre la app',
