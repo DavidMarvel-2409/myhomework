@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/homework_card.dart';
 import '../widgets/app_drawer.dart';
+import '../models/homework.dart';
 
 class CalendarDetailScreen extends StatelessWidget {
   const CalendarDetailScreen({super.key});
@@ -12,7 +13,7 @@ class CalendarDetailScreen extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
 
     final DateTime selectedDay = args['date'];
-    final List tasks = args['tasks'];
+    final List<Homework> tasks = args['tasks'];
 
     return Scaffold(
       drawer: const AppDrawer(),
@@ -43,13 +44,19 @@ class CalendarDetailScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: tasks.length,
                   itemBuilder: (context, index) {
-                    final t = tasks[index];
+                    final Homework t = tasks[index];
+
                     return HomeworkCard(
-                      title: t['title'],
-                      subject: t['subject'],
-                      date: t['date'],
+                      title: t.title,
+                      subject: t.subject,
+                      date:
+                          "${t.dueDate.day}/${t.dueDate.month}/${t.dueDate.year}",
                       onTap: () {
-                        Navigator.pushNamed(context, '/detail', arguments: t);
+                        Navigator.pushNamed(
+                          context,
+                          '/detail',
+                          arguments: {'task': t, 'index': 0},
+                        );
                       },
                     );
                   },
