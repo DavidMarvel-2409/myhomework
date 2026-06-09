@@ -4,6 +4,7 @@ import 'services/notification_service.dart';
 import 'package:provider/provider.dart';
 import 'providers/preferences_provider.dart';
 import 'services/preferences_service.dart';
+import 'viewmodels/qa_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,8 +12,13 @@ void main() async {
   await NotificationService.init();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => PreferencesProvider(PreferencesService()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => PreferencesProvider(PreferencesService()),
+        ),
+        ChangeNotifierProvider(create: (_) => QaViewModel()),
+      ],
       child: const MyApp(),
     ),
   );

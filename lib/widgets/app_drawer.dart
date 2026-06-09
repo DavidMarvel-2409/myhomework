@@ -114,6 +114,16 @@ class AppDrawer extends StatelessWidget {
               _navigate(context, '/poc_notifications');
             },
           ),
+          ListTile(
+            leading: Icon(Icons.star_rate, color: colors.onSecondary),
+            title: Text(
+              'Valorización',
+              style: TextStyle(color: colors.onSecondary),
+            ),
+            onTap: () {
+              _navigate(context, '/qa');
+            },
+          ),
         ],
       ),
     );
