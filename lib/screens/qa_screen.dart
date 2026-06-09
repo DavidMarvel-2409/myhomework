@@ -136,6 +136,8 @@ class _QaScreenState extends State<QaScreen> {
                         icon: const Icon(Icons.send),
                         label: const Text("Enviar"),
                       ),
+
+                      const SizedBox(height: 40),
                     ],
                   ),
                 ),

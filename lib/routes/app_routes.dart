@@ -10,6 +10,7 @@ import '../screens/help_screen.dart';
 import '../screens/notification_poc_screen.dart';
 import '../screens/preferences_screen.dart';
 import '../screens/qa_screen.dart';
+import '../screens/edit_screen.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {
@@ -22,7 +23,8 @@ class AppRoutes {
     '/preferences': (context) => const PreferencesScreen(),
     '/about': (context) => const AboutScreen(),
     '/help': (context) => const HelpScreen(),
-    '/poc_notifications': (context) => const NotificationPoCScreen(),
+    '/edit': (context) => const EditScreen(),
+    // '/poc_notifications': (context) => const NotificationPoCScreen(),
     '/qa': (context) => const QaScreen(),
   };
 }

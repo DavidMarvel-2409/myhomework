@@ -23,6 +23,16 @@ class DetailScreen extends StatelessWidget {
         title: const Text("Detalles de tarea"),
         actions: [
           IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/edit',
+                arguments: {'task': task, 'index': index},
+              );
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () async {
               final confirm = await showDialog<bool>(
