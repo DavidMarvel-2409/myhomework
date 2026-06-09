@@ -22,28 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final List<Map<String, String>> task = const [
-    {
-      'title': 'Guia de 4',
-      'subject': 'Calculo2',
-      'date': '30 Abril',
-      'description': 'Resolver ejercicios del capítulo 4',
-    },
-    {
-      'title': 'Avance proyecto',
-      'subject': 'Programacion Dispositivos Moviles',
-      'date': '28 Abril',
-      'description': 'Implementar pantalla principal en Flutter',
-    },
-    {
-      'title': 'Entrega final de app',
-      'subject': 'Programacion Dispositivos Moviles',
-      'date': '5 Mayo',
-      'description':
-          'Entrega final con la implementacion de todas las pantallas con su flujo de trabajo actualizado',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,81 +145,87 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   padding: const EdgeInsets.all(12),
-                  child: TableCalendar(
-                    rowHeight: 40,
-                    firstDay: DateTime.utc(2020, 1, 1),
-                    lastDay: DateTime.utc(2100, 12, 31),
-                    focusedDay: DateTime.now(),
+                  child: Consumer<HomeworkProvider>(
+                    builder: (context, provider, child) {
+                      return TableCalendar(
+                        rowHeight: 40,
+                        firstDay: DateTime.utc(2020, 1, 1),
+                        lastDay: DateTime.utc(2100, 12, 31),
+                        focusedDay: DateTime.now(),
 
-                    headerStyle: HeaderStyle(
-                      formatButtonVisible: false,
-                      titleCentered: true,
-                      titleTextStyle: Theme.of(
-                        context,
-                      ).textTheme.titleMedium!.copyWith(color: Colors.white),
-                      leftChevronIcon: const Icon(
-                        Icons.chevron_left,
-                        color: Colors.white,
-                      ),
-                      rightChevronIcon: const Icon(
-                        Icons.chevron_right,
-                        color: Colors.white,
-                      ),
-                    ),
+                        headerStyle: HeaderStyle(
+                          formatButtonVisible: false,
+                          titleCentered: true,
+                          titleTextStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: Colors.white),
+                          leftChevronIcon: const Icon(
+                            Icons.chevron_left,
+                            color: Colors.white,
+                          ),
+                          rightChevronIcon: const Icon(
+                            Icons.chevron_right,
+                            color: Colors.white,
+                          ),
+                        ),
 
-                    daysOfWeekStyle: const DaysOfWeekStyle(
-                      weekdayStyle: TextStyle(color: Colors.white),
-                      weekendStyle: TextStyle(color: Colors.white),
-                    ),
+                        daysOfWeekStyle: const DaysOfWeekStyle(
+                          weekdayStyle: TextStyle(color: Colors.white),
+                          weekendStyle: TextStyle(color: Colors.white),
+                        ),
 
-                    calendarStyle: CalendarStyle(
-                      defaultTextStyle: const TextStyle(color: Colors.white),
-                      weekendTextStyle: const TextStyle(color: Colors.white),
-                      outsideTextStyle: TextStyle(
-                        color: Colors.white..withValues(alpha: 0.4),
-                      ),
+                        calendarStyle: CalendarStyle(
+                          defaultTextStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          weekendTextStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          outsideTextStyle: TextStyle(
+                            color: Colors.white..withValues(alpha: 0.4),
+                          ),
 
-                      todayDecoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        shape: BoxShape.circle,
-                      ),
+                          todayDecoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            shape: BoxShape.circle,
+                          ),
 
-                      selectedDecoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        shape: BoxShape.circle,
-                      ),
+                          selectedDecoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            shape: BoxShape.circle,
+                          ),
 
-                      markerDecoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
+                          markerDecoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
 
-                    eventLoader: (day) {
-                      final tasks = context.read<HomeworkProvider>().tasks;
+                        eventLoader: (day) {
+                          return provider.tasks.where((task) {
+                            return task.dueDate.year == day.year &&
+                                task.dueDate.month == day.month &&
+                                task.dueDate.day == day.day;
+                          }).toList();
+                        },
 
-                      return tasks.where((task) {
-                        return task.dueDate.year == day.year &&
-                            task.dueDate.month == day.month &&
-                            task.dueDate.day == day.day;
-                      }).toList();
-                    },
-
-                    onDaySelected: (selectedDay, focusedDay) {
-                      final tasksOfDay = context
-                          .read<HomeworkProvider>()
-                          .tasks
-                          .where((task) {
+                        onDaySelected: (selectedDay, focusedDay) {
+                          final tasksOfDay = provider.tasks.where((task) {
                             return task.dueDate.year == selectedDay.year &&
                                 task.dueDate.month == selectedDay.month &&
                                 task.dueDate.day == selectedDay.day;
-                          })
-                          .toList();
+                          }).toList();
 
-                      Navigator.pushNamed(
-                        context,
-                        '/calendar_detail',
-                        arguments: {'date': selectedDay, 'tasks': tasksOfDay},
+                          Navigator.pushNamed(
+                            context,
+                            '/calendar_detail',
+                            arguments: {
+                              'date': selectedDay,
+                              'tasks': tasksOfDay,
+                            },
+                          );
+                        },
                       );
                     },
                   ),
@@ -252,12 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newTask = await Navigator.pushNamed(context, '/create');
-
-          if (newTask != null) {
-            // print(newTask);
-          }
+        onPressed: () {
+          Navigator.pushNamed(context, '/create');
         },
         child: const Icon(Icons.add),
       ),

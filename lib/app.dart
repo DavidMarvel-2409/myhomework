@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           surface: const Color(0xFFEAF6FF),
           onPrimary: Colors.white,
           onSecondary: Colors.white,
-          onSurface: Colors.white,
+          onSurface: Colors.black,
         ),
 
         appBarTheme: const AppBarTheme(
