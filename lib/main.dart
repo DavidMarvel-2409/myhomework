@@ -6,6 +6,7 @@ import 'providers/preferences_provider.dart';
 import 'services/preferences_service.dart';
 import 'viewmodels/qa_viewmodel.dart';
 import 'providers/homework_provider.dart';
+import 'providers/profile_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,7 @@ void main() async {
         ),
         ChangeNotifierProvider(create: (_) => QaViewModel()),
         ChangeNotifierProvider(create: (_) => HomeworkProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
       child: const MyApp(),
     ),
