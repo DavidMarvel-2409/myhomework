@@ -9,6 +9,8 @@ class ProfileProvider extends ChangeNotifier {
     name: "Usuario",
     email: "usuario@email.com",
   );
+  String get email => profile.email;
+  String get name => profile.name;
 
   Future<void> loadProfile() async {
     profile = await _service.loadProfile();

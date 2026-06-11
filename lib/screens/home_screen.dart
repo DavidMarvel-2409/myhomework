@@ -4,6 +4,8 @@ import 'package:table_calendar/table_calendar.dart';
 import '../widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 import '../providers/homework_provider.dart';
+import '../services/firestore_service.dart';
+import '../models/homework.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

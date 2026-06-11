@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157472745124",
+    "project_id": "basededatos-myhomework",
+    "storage_bucket": "basededatos-myhomework.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157472745124:android:a6eb6f05524a81d66c2831",
+        "android_client_info": {
+          "package_name": "cl.davidmarvel2409.myhomework"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVw6tTV1BzMUZjNk6vwFPZ1MiY8zLLadA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

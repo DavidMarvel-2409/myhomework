@@ -1,39 +1,43 @@
 import 'package:flutter/material.dart';
-
 import '../models/homework.dart';
-import '../services/homework_service.dart';
+import '../services/firestore_service.dart';
+import '../services/profile_service.dart';
 
 class HomeworkProvider extends ChangeNotifier {
-  final HomeworkService _service = HomeworkService();
+  final FirestoreService _service = FirestoreService();
+  final ProfileService _profileService = ProfileService();
 
   List<Homework> _tasks = [];
+  String _userEmail = "";
+
+  void setUserEmail(String email) {
+    _userEmail = email;
+  }
 
   List<Homework> get tasks => _tasks;
 
   Future<void> loadTasks() async {
-    _tasks = await _service.loadTasks();
+    final profile = await _profileService.loadProfile();
+    _tasks = await _service.getTasks(profile.email);
     _sortTasks();
     notifyListeners();
   }
 
   Future<void> addTask(Homework task) async {
-    _tasks.add(task);
-    _sortTasks();
-    await _service.saveTasks(_tasks);
-    notifyListeners();
+    final profile = await _profileService.loadProfile();
+    await _service.addTask(task, profile.email);
+    await loadTasks();
   }
 
   Future<void> removeTask(int index) async {
-    _tasks.removeAt(index);
-    await _service.saveTasks(_tasks);
-    notifyListeners();
+    await _service.deleteTask(_userEmail, _tasks[index].id!);
+    await loadTasks();
   }
 
   Future<void> updateTask(int index, Homework updatedTask) async {
-    _tasks[index] = updatedTask;
-    _sortTasks();
-    await _service.saveTasks(_tasks);
-    notifyListeners();
+    updatedTask.id = _tasks[index].id;
+    await _service.updateTask(updatedTask, _userEmail);
+    await loadTasks();
   }
 
   void _sortTasks() {

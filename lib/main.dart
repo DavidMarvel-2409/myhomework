@@ -7,10 +7,12 @@ import 'services/preferences_service.dart';
 import 'viewmodels/qa_viewmodel.dart';
 import 'providers/homework_provider.dart';
 import 'providers/profile_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await NotificationService.init();
 
   runApp(
