@@ -7,14 +7,18 @@ import '../screens/splash_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/about_screen.dart';
 import '../screens/help_screen.dart';
-import '../screens/notification_poc_screen.dart';
+// import '../screens/notification_poc_screen.dart';
 import '../screens/preferences_screen.dart';
 import '../screens/qa_screen.dart';
 import '../screens/edit_screen.dart';
+import '../screens/login_screen.dart';
+import '../auth_gate.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {
     '/': (context) => const SplashScreen(),
+    '/login': (context) => const LoginScreen(),
+    '/auth': (context) => const AuthGate(),
     '/home': (context) => const HomeScreen(),
     '/create': (context) => CreateScreen(),
     '/detail': (context) => DetailScreen(),

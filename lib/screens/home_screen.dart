@@ -1,3 +1,4 @@
+import '../services/auth_service.dart';
 import 'package:flutter/material.dart';
 import '../widgets/homework_card.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -6,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../providers/homework_provider.dart';
 import '../services/firestore_service.dart';
 import '../models/homework.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,16 +30,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const AppDrawer(),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Row(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: [
+      //       Image.asset('assets/images/app_icon2.png', width: 30, height: 30),
+      //       const SizedBox(width: 8),
+      //       const Text("MyHomework"),
+      //     ],
+      //   ),
+
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.logout),
+      //       onPressed: () async {
+      //         await AuthService().logout();
+      //       },
+      //     ),
+      //   ],
+      // ),
       appBar: AppBar(
-        centerTitle: true,
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset('assets/images/app_icon2.png', width: 30, height: 30),
-            const SizedBox(width: 8),
-            const Text("MyHomework"),
-          ],
-        ),
+        title: const Text("MyHomework"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+
+              if (context.mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/auth',
+                  (route) => false,
+                );
+              }
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

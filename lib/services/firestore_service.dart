@@ -24,21 +24,11 @@ class FirestoreService {
     }).toList();
   }
 
-  Future<void> deleteTask(String email, String id) async {
-    await _db
-        .collection('users')
-        .doc(email)
-        .collection('tasks')
-        .doc(id)
-        .delete();
+  Future<void> deleteTask(String id) async {
+    await _db.collection('tasks').doc(id).delete();
   }
 
-  Future<void> updateTask(Homework task, String email) async {
-    await _db
-        .collection('users')
-        .doc(email)
-        .collection('tasks')
-        .doc(task.id)
-        .update(task.toJson());
+  Future<void> updateTask(Homework task) async {
+    await _db.collection('tasks').doc(task.id).update(task.toJson());
   }
 }
