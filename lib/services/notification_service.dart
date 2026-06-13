@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_native_timezone_latest/flutter_native_timezone_latest.dart';
+import '../models/homework.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin _plugin =
@@ -59,21 +60,33 @@ class NotificationService {
     await _plugin.cancel(notificationId);
   }
 
-  static Future<void> scheduleTaskNotification({
-    required int notificationId,
-    required String title,
-    required String subject,
-    required DateTime dueDate,
-  }) async {
-    // final scheduledDate = DateTime(
-    //   dueDate.year,
-    //   dueDate.month,
-    //   dueDate.day - 1,
-    //   9,
-    //   0,
-    // );
-    // final scheduledDate = DateTime.now().add(const Duration(seconds: 20));
-    final tzDate = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 20));
+  static Future<void> _scheduleReminder(Homework task, int daysBefore) async {
+    final notificationDate = DateTime(
+      task.dueDate.year,
+      task.dueDate.month,
+      task.dueDate.day - daysBefore,
+      9,
+      0,
+    );
+
+    if (notificationDate.isBefore(DateTime.now())) {
+      return;
+    }
+
+    final tzDate = tz.TZDateTime.from(notificationDate, tz.local);
+
+    String body;
+
+    if (daysBefore == 0) {
+      body = '${task.subject} - ${task.title} vence hoy';
+    } else if (daysBefore == 1) {
+      body = '${task.subject} - ${task.title} vence mañana';
+    } else {
+      body = '${task.subject} - ${task.title} vence en $daysBefore días';
+    }
+
+    final notificationId = task.id.hashCode + daysBefore;
+
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'task_channel',
@@ -82,35 +95,21 @@ class NotificationService {
           importance: Importance.max,
           priority: Priority.high,
         );
+
     const NotificationDetails details = NotificationDetails(
       android: androidDetails,
     );
-    debugPrint('================================');
-    debugPrint('Programando notificación');
-    debugPrint('notificationId: $notificationId');
-    // debugPrint('scheduledDate: $scheduledDate');
-    debugPrint('tzDate: $tzDate');
-    debugPrint('now: ${DateTime.now()}');
-    debugPrint('================================');
+
     await _plugin.zonedSchedule(
       notificationId,
-      'Tarea próxima a vencer',
-      '$subject - $title vence mañana',
+      'Recordatorio de tarea',
+      body,
       tzDate,
       details,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
-    debugPrint('Notificación programada correctamente');
-
-    final pending = await _plugin.pendingNotificationRequests();
-    for (final notification in pending) {
-      debugPrint(
-        'ID=${notification.id} '
-        'TITLE=${notification.title}',
-      );
-    }
   }
 
   static Future<void> printPendingNotifications() async {
@@ -120,6 +119,30 @@ class NotificationService {
 
     for (final p in pending) {
       debugPrint('ID=${p.id} TITLE=${p.title}');
+    }
+  }
+
+  static Future<void> scheduleAllNotifications(List<Homework> tasks) async {
+    await _plugin.cancelAll();
+
+    final now = DateTime.now();
+
+    for (final task in tasks) {
+      final dueDate = task.dueDate;
+
+      final daysUntilDue = dueDate.difference(now).inDays;
+
+      if (daysUntilDue >= 2) {
+        await _scheduleReminder(task, 2);
+      }
+
+      if (daysUntilDue >= 1) {
+        await _scheduleReminder(task, 1);
+      }
+
+      if (daysUntilDue >= 0) {
+        await _scheduleReminder(task, 0);
+      }
     }
   }
 }
