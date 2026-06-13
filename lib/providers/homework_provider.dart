@@ -3,11 +3,11 @@ import '../models/homework.dart';
 import '../services/firestore_service.dart';
 import '../services/profile_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../services/notification_service.dart';
 
 class HomeworkProvider extends ChangeNotifier {
   final FirestoreService _service = FirestoreService();
   final ProfileService _profileService = ProfileService();
-
   List<Homework> _tasks = [];
 
   List<Homework> get tasks => _tasks;
@@ -23,7 +23,21 @@ class HomeworkProvider extends ChangeNotifier {
   Future<void> addTask(Homework task) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
-    await _service.addTask(task, user.email!);
+    final taskId = await _service.addTask(task, user.email!);
+    task.id = taskId;
+
+    try {
+      await NotificationService.scheduleTaskNotification(
+        notificationId: taskId.hashCode.abs(),
+        title: task.title,
+        subject: task.subject,
+        dueDate: task.dueDate,
+      );
+      await Future.delayed(const Duration(seconds: 5));
+      await NotificationService.showTestNotification();
+    } catch (e) {
+      debugPrint('Error programando notificación: $e');
+    }
     await loadTasks();
   }
 

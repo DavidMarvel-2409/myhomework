@@ -7,7 +7,7 @@ import '../screens/splash_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/about_screen.dart';
 import '../screens/help_screen.dart';
-// import '../screens/notification_poc_screen.dart';
+import '../screens/notification_poc_screen.dart';
 import '../screens/preferences_screen.dart';
 import '../screens/qa_screen.dart';
 import '../screens/edit_screen.dart';
@@ -28,7 +28,7 @@ class AppRoutes {
     '/about': (context) => const AboutScreen(),
     '/help': (context) => const HelpScreen(),
     '/edit': (context) => const EditScreen(),
-    // '/poc_notifications': (context) => const NotificationPoCScreen(),
+    '/poc_notifications': (context) => const NotificationPoCScreen(),
     '/qa': (context) => const QaScreen(),
   };
 }

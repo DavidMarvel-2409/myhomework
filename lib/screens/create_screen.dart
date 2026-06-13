@@ -6,7 +6,7 @@ import '../models/homework.dart';
 import '../providers/homework_provider.dart';
 
 class CreateScreen extends StatefulWidget {
-  CreateScreen({super.key});
+  const CreateScreen({super.key});
   @override
   State<CreateScreen> createState() => _CreateScreenState();
 }

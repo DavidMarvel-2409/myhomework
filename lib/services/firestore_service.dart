@@ -4,14 +4,15 @@ import '../models/homework.dart';
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> addTask(Homework task, String userEmail) async {
-    await _db.collection('tasks').add({
+  Future<String> addTask(Homework task, String userEmail) async {
+    final docRef = await _db.collection('tasks').add({
       'userEmail': userEmail,
       'title': task.title,
       'subject': task.subject,
       'description': task.description,
       'dueDate': task.dueDate.toIso8601String(),
     });
+    return docRef.id;
   }
 
   Future<List<Homework>> getTasks(String userEmail) async {
@@ -30,5 +31,9 @@ class FirestoreService {
 
   Future<void> updateTask(Homework task) async {
     await _db.collection('tasks').doc(task.id).update(task.toJson());
+  }
+
+  int notificationIdFromTask(String taskId) {
+    return taskId.hashCode.abs();
   }
 }

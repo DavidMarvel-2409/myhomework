@@ -53,17 +53,16 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
-          ListTile(
-            leading: Icon(Icons.calendar_today, color: colors.onSecondary),
-            title: Text(
-              'Calendario',
-              style: TextStyle(color: colors.onSecondary),
-            ),
-            onTap: () {
-              _navigate(context, '/home');
-            },
-          ),
-
+          // ListTile(
+          //   leading: Icon(Icons.calendar_today, color: colors.onSecondary),
+          //   title: Text(
+          //     'Calendario',
+          //     style: TextStyle(color: colors.onSecondary),
+          //   ),
+          //   onTap: () {
+          //     _navigate(context, '/home');
+          //   },
+          // ),
           Divider(color: colors.onSecondary.withValues(alpha: 0.4)),
 
           ListTile(

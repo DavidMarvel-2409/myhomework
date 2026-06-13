@@ -9,17 +9,23 @@ class NotificationPoCScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("PoC Notificaciones")),
       body: Center(
+        // child: ElevatedButton(
+        //   onPressed: () async {
+        //     await NotificationService.showTestNotification();
+
+        //     if (!context.mounted) return;
+
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(content: Text("Notificación enviada")),
+        //     );
+        //   },
+        //   child: const Text("Disparar notificación"),
+        // ),
         child: ElevatedButton(
           onPressed: () async {
-            await NotificationService.showTestNotification();
-
-            if (!context.mounted) return;
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Notificación enviada")),
-            );
+            await NotificationService.printPendingNotifications();
           },
-          child: const Text("Disparar notificación"),
+          child: const Text("Ver pendientes"),
         ),
       ),
     );

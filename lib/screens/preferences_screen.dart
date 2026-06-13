@@ -23,24 +23,6 @@ class PreferencesScreen extends StatelessWidget {
                 'Preferencias de Usuario',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 20),
-
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    style: const TextStyle(color: Colors.white),
-                    controller: TextEditingController(
-                      text: preferencesProvider.userName,
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: 'Nombre de Usuario',
-                      prefixIcon: Icon(Icons.person),
-                    ),
-                    onSubmitted: preferencesProvider.updateUserName,
-                  ),
-                ),
-              ),
 
               const SizedBox(height: 12),
 
