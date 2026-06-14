@@ -21,12 +21,12 @@ class NotificationPoCScreen extends StatelessWidget {
         //   },
         //   child: const Text("Disparar notificación"),
         // ),
-        child: ElevatedButton(
-          onPressed: () async {
-            await NotificationService.printPendingNotifications();
-          },
-          child: const Text("Ver pendientes"),
-        ),
+        // child: ElevatedButton(
+        //   onPressed: () async {
+        //     await NotificationService.printPendingNotifications();
+        //   },
+        //   child: const Text("Ver pendientes"),
+        // ),
       ),
     );
   }

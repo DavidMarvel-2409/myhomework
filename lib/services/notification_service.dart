@@ -34,38 +34,16 @@ class NotificationService {
     await androidPlugin?.requestExactAlarmsPermission();
   }
 
-  static Future<void> showTestNotification() async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          'poc_channel',
-          'PoC Notifications',
-          channelDescription: 'Canal de pruebas',
-          importance: Importance.max,
-          priority: Priority.high,
-        );
-
-    const NotificationDetails details = NotificationDetails(
-      android: androidDetails,
-    );
-
-    await _plugin.show(
-      0,
-      'Prueba PoC',
-      'La notificación funciona correctamente',
-      details,
-    );
-  }
-
-  static Future<void> cancelTaskNotification(int notificationId) async {
-    await _plugin.cancel(notificationId);
-  }
-
-  static Future<void> _scheduleReminder(Homework task, int daysBefore) async {
+  static Future<void> _scheduleReminder(
+    Homework task,
+    int daysBefore,
+    int hour,
+  ) async {
     final notificationDate = DateTime(
       task.dueDate.year,
       task.dueDate.month,
       task.dueDate.day - daysBefore,
-      9,
+      hour,
       0,
     );
 
@@ -85,7 +63,7 @@ class NotificationService {
       body = '${task.subject} - ${task.title} vence en $daysBefore días';
     }
 
-    final notificationId = task.id.hashCode + daysBefore;
+    final notificationId = task.id.hashCode + (daysBefore * 100) + hour;
 
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
@@ -112,15 +90,116 @@ class NotificationService {
     );
   }
 
-  static Future<void> printPendingNotifications() async {
-    final pending = await _plugin.pendingNotificationRequests();
+  static Future<void> _scheduleMondaySummary(List<Homework> tasks) async {
+    final now = DateTime.now();
 
-    debugPrint('Pendientes: ${pending.length}');
+    final daysUntilMonday = (DateTime.monday - now.weekday + 7) % 7;
 
-    for (final p in pending) {
-      debugPrint('ID=${p.id} TITLE=${p.title}');
+    final mondayDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      9,
+      0,
+    ).add(Duration(days: daysUntilMonday));
+
+    if (mondayDate.isBefore(now)) {
+      return;
     }
+
+    final weekEnd = mondayDate.add(const Duration(days: 7));
+
+    final weekTasks = tasks.where((task) {
+      return task.dueDate.isAfter(mondayDate) && task.dueDate.isBefore(weekEnd);
+    }).toList();
+
+    if (weekTasks.isEmpty) {
+      return;
+    }
+
+    final body = weekTasks.map((t) => '${t.subject}: ${t.title}').join('\n');
+
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'weekly_channel',
+          'Weekly Notifications',
+          channelDescription: 'Resumen semanal',
+          importance: Importance.max,
+          priority: Priority.high,
+        );
+
+    const NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _plugin.zonedSchedule(
+      999001,
+      'Tareas de esta semana',
+      body,
+      tz.TZDateTime.from(mondayDate, tz.local),
+      details,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
   }
+
+  static Future<void> _scheduleSaturdaySummary(List<Homework> tasks) async {
+    final now = DateTime.now();
+
+    final daysUntilSaturday = (DateTime.saturday - now.weekday + 7) % 7;
+
+    final saturdayDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      9,
+      0,
+    ).add(Duration(days: daysUntilSaturday));
+
+    final futureTasks = tasks.where((task) {
+      final daysUntilDue = task.dueDate.difference(saturdayDate).inDays;
+
+      return daysUntilDue > 7;
+    }).toList();
+    if (futureTasks.isEmpty) {
+      return;
+    }
+    final body = futureTasks.map((t) => '${t.subject}: ${t.title}').join('\n');
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'weekly_channel',
+          'Weekly Notifications',
+          channelDescription: 'Resumen semanal',
+          importance: Importance.max,
+          priority: Priority.high,
+        );
+
+    const NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _plugin.zonedSchedule(
+      999002,
+      'Tareas a futuro',
+      body,
+      tz.TZDateTime.from(saturdayDate, tz.local),
+      details,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
+
+  // static Future<void> printPendingNotifications() async {
+  //   final pending = await _plugin.pendingNotificationRequests();
+
+  //   debugPrint('Pendientes: ${pending.length}');
+
+  //   for (final p in pending) {
+  //     debugPrint('ID=${p.id} TITLE=${p.title}');
+  //   }
+  // }
 
   static Future<void> scheduleAllNotifications(List<Homework> tasks) async {
     await _plugin.cancelAll();
@@ -133,16 +212,22 @@ class NotificationService {
       final daysUntilDue = dueDate.difference(now).inDays;
 
       if (daysUntilDue >= 2) {
-        await _scheduleReminder(task, 2);
+        await _scheduleReminder(task, 2, 9);
+        await _scheduleReminder(task, 2, 19);
       }
 
       if (daysUntilDue >= 1) {
-        await _scheduleReminder(task, 1);
+        await _scheduleReminder(task, 1, 9);
+        await _scheduleReminder(task, 1, 19);
       }
 
       if (daysUntilDue >= 0) {
-        await _scheduleReminder(task, 0);
+        await _scheduleReminder(task, 0, 9);
+        await _scheduleReminder(task, 0, 19);
       }
     }
+
+    await _scheduleMondaySummary(tasks);
+    await _scheduleSaturdaySummary(tasks);
   }
 }

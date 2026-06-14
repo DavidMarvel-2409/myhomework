@@ -68,13 +68,13 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.logout),
-                  label: const Text("Cerrar sesión"),
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                  },
-                ),
+                // ElevatedButton.icon(
+                //   icon: const Icon(Icons.logout),
+                //   label: const Text("Cerrar sesión"),
+                //   onPressed: () async {
+                //     await FirebaseAuth.instance.signOut();
+                //   },
+                // ),
               ],
             );
           },

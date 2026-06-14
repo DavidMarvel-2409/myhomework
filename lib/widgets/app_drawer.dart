@@ -103,16 +103,16 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
-          ListTile(
-            leading: Icon(Icons.notifications, color: colors.onSecondary),
-            title: Text(
-              'PoC Notificaciones',
-              style: TextStyle(color: colors.onSecondary),
-            ),
-            onTap: () {
-              _navigate(context, '/poc_notifications');
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.notifications, color: colors.onSecondary),
+          //   title: Text(
+          //     'PoC Notificaciones',
+          //     style: TextStyle(color: colors.onSecondary),
+          //   ),
+          //   onTap: () {
+          //     _navigate(context, '/poc_notifications');
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.star_rate, color: colors.onSecondary),
             title: Text(

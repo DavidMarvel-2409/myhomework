@@ -96,7 +96,9 @@ class HelpScreen extends StatelessWidget {
                 color: Theme.of(context).iconTheme.color,
               ),
               title: const Text("Contacto"),
-              subtitle: const Text("soporte@myhomework.com"),
+              subtitle: const Text(
+                "myhomework.soporte@gmail.com\nNo se garantiza la atención inmediata.",
+              ),
             ),
           ],
         ),
