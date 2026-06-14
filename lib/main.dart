@@ -18,11 +18,16 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => PreferencesProvider(PreferencesService()),
+        ChangeNotifierProvider(create: (_) => HomeworkProvider()),
+        ChangeNotifierProxyProvider<HomeworkProvider, PreferencesProvider>(
+          create: (_) =>
+              PreferencesProvider(PreferencesService(), HomeworkProvider()),
+          update: (_, homeworkProvider, previous) {
+            previous?.updateHomeworkProvider(homeworkProvider);
+            return previous!;
+          },
         ),
         ChangeNotifierProvider(create: (_) => QaViewModel()),
-        ChangeNotifierProvider(create: (_) => HomeworkProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
       child: const MyApp(),

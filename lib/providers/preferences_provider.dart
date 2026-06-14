@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import '../services/preferences_service.dart';
+import 'homework_provider.dart';
+import '../services/notification_service.dart';
 
 class PreferencesProvider extends ChangeNotifier {
   final PreferencesService _preferencesService;
 
-  PreferencesProvider(this._preferencesService) {
+  HomeworkProvider _homeworkProvider;
+
+  PreferencesProvider(this._preferencesService, this._homeworkProvider) {
     loadPreferences();
+  }
+  void updateHomeworkProvider(HomeworkProvider provider) {
+    _homeworkProvider = provider;
   }
 
   bool _notificationsEnabled = true;
@@ -34,17 +41,19 @@ class PreferencesProvider extends ChangeNotifier {
   }
 
   Future<void> updateNotificationsEnabled(bool value) async {
+    debugPrint('Notifications Enabled = $value');
     _notificationsEnabled = value;
     notifyListeners();
-
     await _preferencesService.setNotificationsEnabled(value);
+    await _homeworkProvider.refreshNotifications();
   }
 
   Future<void> updateDailyReminderEnabled(bool value) async {
+    debugPrint('Daily Reminder Enabled = $value');
     _dailyReminderEnabled = value;
     notifyListeners();
-
     await _preferencesService.setDailyReminderEnabled(value);
+    await _homeworkProvider.refreshNotifications();
   }
 
   Future<void> updateCompactModeEnabled(bool value) async {

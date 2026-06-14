@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/preferences_provider.dart';
 import '../widgets/app_drawer.dart';
+import '../providers/homework_provider.dart';
+import '../services/notification_service.dart';
 
 class PreferencesScreen extends StatelessWidget {
   const PreferencesScreen({super.key});
@@ -34,7 +36,15 @@ class PreferencesScreen extends StatelessWidget {
                   subtitle: const Text('Recibir avisos de tareas pendientes'),
                   secondary: const Icon(Icons.notifications),
                   value: preferencesProvider.notificationsEnabled,
-                  onChanged: preferencesProvider.updateNotificationsEnabled,
+                  onChanged: (value) async {
+                    await preferencesProvider.updateNotificationsEnabled(value);
+
+                    if (!value) {
+                      await NotificationService.cancelAllNotifications();
+                    } else {
+                      await context.read<HomeworkProvider>().loadTasks();
+                    }
+                  },
                 ),
               ),
 

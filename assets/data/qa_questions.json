@@ -17,6 +17,12 @@
 "valor": 0,
 "min": "0 estrellas: La interfaz es poco clara y difícil de entender.",
 "max": "5 estrellas: La interfaz es clara, atractiva y facilita el uso."
+},
+{
+  "titulo": "¿Qué tan fácil fue personalizar la aplicación según tus preferencias?",
+  "valor": 0,
+  "min": "0 estrellas: No pude entender o usar las opciones de configuración.",
+  "max": "5 estrellas: La configuración fue clara y útil."
 }
 ],
 "contenido": [
@@ -57,6 +63,12 @@
 "valor": 0,
 "min": "0 estrellas: No creo que sea útil para otras personas.",
 "max": "5 estrellas: Estoy seguro de que sería muy útil para personas cercanas."
+},
+{
+  "titulo": "¿Qué tan satisfecho estás con la aplicación en general?",
+  "valor": 0,
+  "min": "0 estrellas: Muy insatisfecho, la app no cumple su función.",
+  "max": "5 estrellas: Muy satisfecho, la app cumple perfectamente su propósito."
 }
 ]
 }
