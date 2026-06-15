@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
 import '../models/homework.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/homework_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
@@ -60,6 +60,17 @@ class DetailScreen extends StatelessWidget {
 
                 Navigator.pop(context);
               }
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {
+              Share.share(
+                'Tarea: ${task.title}\n'
+                'Asignatura: ${task.subject}\n'
+                'Fecha de entrega: ${task.dueDate.day}/${task.dueDate.month}/${task.dueDate.year}\n'
+                'Descripción: ${task.description}',
+              );
             },
           ),
         ],

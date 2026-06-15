@@ -46,13 +46,13 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.code),
               title: const Text("Tecnología"),
-              subtitle: const Text("Flutter"),
+              subtitle: const Text("Flutter + Firebase + Provider"),
             ),
 
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text("Versión"),
-              subtitle: const Text("1.0.0 (Maqueta)"),
+              subtitle: const Text("1.0.0 (Prototipo Funcional)"),
             ),
 
             const SizedBox(height: 20),

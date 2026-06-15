@@ -1,92 +1,112 @@
 # MyHomework: Sistema de gestión y recordatorios académicos
 
 ## Descripción
-MyHomework es una aplicación móvil diseñada para ayudar a estudiantes a organizar sus tareas académicas de manera eficiente.
 
-La aplicación permite registrar actividades con fechas límite, descripciones y niveles de prioridad, además de generar recordatorios automáticos para evitar olvidos y mejorar la planificación del tiempo.
+MyHomework es una aplicación móvil desarrollada en Flutter para ayudar a estudiantes a organizar sus tareas académicas de manera eficiente.
+
+La aplicación permite registrar tareas con fechas límite y descripciones, visualizarlas en un calendario, recibir notificaciones de recordatorio, y gestionar un perfil de usuario con autenticación mediante Firebase.
 
 ---
 
 ## Funcionalidades implementadas
 
+- Autenticación de usuarios (registro e inicio de sesión con Firebase Auth)
 - Visualización de tareas en pantalla principal
-- Navegación a detalle de cada tarea
-- Creación de nuevas tareas (formulario)
-- Visualización de tareas por fecha mediante calendario
+- Creación de nuevas tareas (título, asignatura, fecha de entrega, descripción)
+- Edición y eliminación de tareas
+- Eliminación rápida con deslizamiento (Dismissible)
+- Visualización de tareas por fecha mediante calendario interactivo
+- Notificaciones locales y recordatorio diario
+- Perfil de usuario editable (nombre, sincronizado con Firestore)
+- Preferencias de usuario persistentes (notificaciones, modo compacto, recordatorio diario)
+- Compartir tareas con otras apps del dispositivo (WhatsApp, correo, etc.)
+- Sistema de valorización QA con envío de respuestas por correo
 - Navegación mediante menú lateral (Drawer)
 - Pantalla de inicio (Splash Screen)
-- Pantallas adicionales: Perfil, Ayuda y Sobre la aplicación
+- Pantallas adicionales: Perfil, Ayuda, Sobre la aplicación
 
 ---
 
 ## Instrucciones de uso
+
 1. Al iniciar la aplicación, se muestra una pantalla de inicio (Splash Screen).
-2. Luego se accede a la pantalla principal con la lista de tareas.
-3. Cada tarea se presenta en formato de tarjeta con título, asignatura y fecha.
-4. Al presionar una tarea, se accede a la pantalla de detalle.
-5. El botón "+" permite acceder a la pantalla de creación de nuevas tareas.
-6. El menú lateral (Drawer) permite navegar entre las distintas secciones.
-7. Actualmente, las funcionalidades utilizan datos simulados y no se almacenan de forma persistente.
+2. Se redirige automáticamente a la pantalla de autenticación.
+3. El usuario puede iniciar sesión o crear una cuenta con correo y contraseña.
+4. Una vez autenticado, se accede a la pantalla principal con la lista de tareas y el calendario.
+5. Cada tarea se presenta en formato de tarjeta con título, asignatura y fecha.
+6. Al presionar una tarea, se accede al detalle, donde se puede editar o eliminar.
+7. También se puede eliminar una tarea deslizando la tarjeta hacia la izquierda.
+8. El botón "+" permite crear nuevas tareas.
+9. El menú lateral (Drawer) permite navegar entre las distintas secciones.
+10. Desde Preferencias se pueden configurar notificaciones y el modo compacto.
 
 ---
 
 ## Estado actual del proyecto
 
-El proyecto corresponde a una maqueta funcional, que implementa el flujo principal de la aplicación:
+El proyecto es una aplicación funcional con backend real, que implementa el flujo completo de la aplicación:
 
-- Splash Screen inicial
-- Listado de tareas
-- Visualización de tareas en calendario
-- Creación de tareas
-- Pantalla de detalle
-- Pantallas adicionales (Perfil, Ayuda, Sobre la app)
+- Autenticación con Firebase Auth
+- Persistencia de tareas con Firebase Firestore
+- Notificaciones locales con flutter_local_notifications
+- Preferencias persistentes con SharedPreferences
+- Perfil de usuario sincronizado con Firestore
+- Gestión de estado con Provider y patrón MVVM
 - Navegación completa mediante Drawer
-- Uso de Theme global para consistencia visual
+- Tema global consistente
 
 ---
 
 ## Arquitectura del proyecto
 
-El proyecto sigue una estructura modular basada en Flutter:
+El proyecto sigue el patrón **MVVM (Model-View-ViewModel)** con una estructura modular por capas:
 
-- **screens/**: contiene todas las pantallas de la aplicación
+- **screens/**: pantallas de la aplicación (Views)
 - **widgets/**: componentes reutilizables (tarjetas, drawer, etc.)
+- **providers/**: gestión de estado (ViewModels)
+- **viewmodels/**: lógica de presentación (QaViewModel)
+- **models/**: modelos de datos (Homework, Profile, etc.)
+- **services/**: servicios desacoplados (Auth, Firestore, Notificaciones, Preferencias)
+- **routes/**: configuración de rutas y navegación
 - **main.dart**: punto de entrada de la aplicación
-- **app_routes.dart**: configuración de rutas y navegación
-
-Se utiliza navegación basada en rutas mediante (`Navigator`), permitiendo la transición entre pantallas y el flujo de la aplicación.
+- **app.dart**: configuración del tema y rutas
 
 ---
+
 ## Estructura del proyecto
 
 ```text
 lib/
 ├── models/
+├── providers/
 ├── routes/
 ├── screens/
 ├── services/
+├── viewmodels/
 ├── widgets/
 ├── app.dart
+├── auth_gate.dart
+├── firebase_options.dart
 └── main.dart
 ```
----
-
-## Datos de ejemplo
-La aplicación utiliza datos simulados para representar tareas, incluyendo:
-- Título de la tarea
-- Asignatura
-- Fecha de entrega
-Estos datos permiten demostrar el funcionamiento de la interfaz sin requerir persistencia.
 
 ---
 
-## Características del dispositivo móvil
-La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
+## Tecnologías utilizadas
 
-- Interfaz táctil intuitiva
-- Acceso rápido desde cualquier lugar
-- Organización visual de datos
-- Simulación de recordatorios
+| Tecnología | Uso |
+|---|---|
+| Flutter | Framework de desarrollo multiplataforma |
+| Dart | Lenguaje de programación |
+| Firebase Auth | Autenticación de usuarios |
+| Firebase Firestore | Persistencia de datos en la nube |
+| Provider | Gestión de estado |
+| flutter_local_notifications | Notificaciones locales |
+| SharedPreferences | Persistencia de preferencias del usuario |
+| TableCalendar | Visualización de calendario interactivo |
+| share_plus | Compartir contenido con el ecosistema nativo del dispositivo |
+| url_launcher | Envío de correos desde la app |
+| Material Design | Sistema de diseño visual |
 
 ---
 
@@ -94,48 +114,47 @@ La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
 
 ### Historias de usuario
 
+- Como estudiante, quiero registrarme e iniciar sesión para tener mis tareas sincronizadas.
 - Como estudiante, quiero agregar tareas para organizar mis actividades.
 - Como estudiante, quiero asignar fechas límite para no olvidar entregas.
-- Como estudiante, quiero recibir recordatorios antes de una tarea.
-- Como estudiante, quiero visualizar todas mis tareas en una lista.
+- Como estudiante, quiero recibir notificaciones de recordatorio antes de una tarea.
+- Como estudiante, quiero visualizar todas mis tareas en una lista y en un calendario.
+- Como estudiante, quiero editar o eliminar tareas para mantener mi lista actualizada.
+- Como estudiante, quiero configurar mis preferencias de notificación.
 
 ---
 
 ### Requerimientos funcionales
 
-- El sistema permite crear tareas
-- El sistema permite visualizar tareas
-- El sistema permite ver el detalle de una tarea
-- El sistema permite visualizar tareas en un calendario
-- El sistema permite navegar entre distintas pantallas mediante un menú lateral
+- El sistema permite registrar e iniciar sesión con correo y contraseña
+- El sistema permite crear tareas con título, asignatura, fecha y descripción
+- El sistema permite visualizar, editar y eliminar tareas
+- El sistema permite ver tareas en un calendario interactivo
+- El sistema envía notificaciones locales de recordatorio
+- El sistema persiste preferencias del usuario entre sesiones
+- El sistema permite navegar entre pantallas mediante un menú lateral
 
 ---
 
 ### Requerimientos no funcionales
 
 - La aplicación debe ser rápida y responsiva
-- Debe ser fácil de usar
+- Debe ser fácil de usar para estudiantes
 - Debe funcionar en dispositivos Android
+- Debe mantener los datos sincronizados con Firebase
 - Debe tener bajo consumo de recursos
 
 ---
 
-## Limitaciones actuales
+## Características del dispositivo móvil
 
-- No existe persistencia de datos (las tareas no se guardan)
-- No se implementan notificaciones reales
-- No se pueden editar ni eliminar tareas
-- Los datos utilizados son simulados
+La aplicación aprovecha funcionalidades propias de dispositivos móviles:
 
----
-
-## Tecnologías utilizadas
-
-- Flutter (framework de desarrollo multiplataforma)
-- Dart (lenguaje de programación)
-- Material Design (sistema de diseño)
-- Navigator (gestión de rutas)
-- TableCalendar (visualización de calendario)
+- Interfaz táctil intuitiva (gestos de deslizamiento para eliminar)
+- Notificaciones locales del sistema operativo
+- Acceso a cliente de correo del dispositivo (envío de valorización)
+- Almacenamiento persistente local (SharedPreferences)
+- Conectividad con servicios en la nube (Firebase)
 
 ---
 
@@ -144,138 +163,136 @@ La aplicación aprovecha funcionalidades propias de dispositivos móviles como:
 ```mermaid
 flowchart TD
 
-    A[Inicio - Splash Screen] --> B[Home]
+    A[Inicio - Splash Screen] --> B[Auth Gate]
 
-    B --> C[Ver lista de tareas]
-    B --> D[Abrir calendario]
+    B -->|No autenticado| C[Login / Registro]
+    B -->|Autenticado| D[Home]
 
-    C --> E[Seleccionar tarea]
-    E --> F[Ver detalle de tarea]
+    C --> D
 
-    D --> G[Seleccionar día]
-    G --> H[Ver tareas del día]
-    H --> F
+    D --> E[Ver lista de tareas]
+    D --> F[Abrir calendario]
 
-    B --> I[Botón crear tarea]
-    I --> J[Formulario de creación]
-    J --> B
+    E --> G[Seleccionar tarea]
+    G --> H[Ver detalle de tarea]
+    H --> I[Editar tarea]
+    H --> J[Eliminar tarea]
+    H --> K[Compartir tarea]
+    K --> L[Menu nativo del dispositivo]
 
-    B --> K[Menú lateral - Drawer]
+    F --> M[Seleccionar dia]
+    M --> N[Ver tareas del dia]
+    N --> H
 
-    K --> L[Perfil]
-    K --> M[Sobre la app]
-    K --> N[Ayuda]
+    D --> O[Boton crear tarea]
+    O --> P[Formulario de creacion]
+    P --> D
 
-    L --> B
-    M --> B
-    N --> B
+    D --> Q[Menu lateral - Drawer]
+
+    Q --> R[Perfil]
+    Q --> S[Preferencias]
+    Q --> T[Valorizacion QA]
+    Q --> U[Sobre la app]
+    Q --> V[Ayuda]
 ```
+
 ---
-## Investigacion
-[RESEARCH.md](RESEARCH.md)
----
+
 # Arquitectura y Modelado
 
 Como parte del proceso de validación técnica y diseño de la solución móvil, se desarrollaron distintos artefactos de ingeniería de software orientados a modelar:
 
-- Separación de responsabilidades.
-- Flujo asíncrono de la aplicación.
-- Gestión de estados críticos.
-- Integración entre Flutter y servicios nativos Android.
+- Separación de responsabilidades (MVVM)
+- Flujo asíncrono de la aplicación
+- Gestión de estados críticos
+- Integración entre Flutter y servicios nativos Android y Firebase
+
 ---
+
 # Artefactos de Ingeniería de Software
+
 ---
+
 ## Diagrama Estructural
+
 ```mermaid
 graph TD
 
-%% =========================
-%% CAPA DE PRESENTACIÓN
-%% =========================
-subgraph Presentacion["Capa de Presentación (Flutter UI)"]
+subgraph Presentacion["Capa de Presentacion Flutter UI"]
+    SPL[SplashScreen]
+    LS[LoginScreen]
     HS[HomeScreen]
     CS[CreateScreen]
     DS[DetailScreen]
+    ES[EditScreen]
     CDS[CalendarDetailScreen]
     PS[ProfileScreen]
+    PRS[PreferencesScreen]
+    QAS[QaScreen]
     AS[AboutScreen]
     HES[HelpScreen]
-    SPL[SplashScreen]
 end
 
-%% =========================
-%% WIDGETS REUTILIZABLES
-%% =========================
 subgraph Widgets["Widgets UI Reutilizables"]
     DW[AppDrawer]
     HC[HomeworkCard]
 end
 
-%% =========================
-%% NAVEGACIÓN
-%% =========================
-subgraph Routing["Capa de Navegación"]
+subgraph Routing["Capa de Navegacion"]
+    AG[AuthGate]
     AR[AppRoutes]
-    NAV[Navigator]
 end
 
-%% =========================
-%% MODELO DE DATOS
-%% =========================
-subgraph Modelos["Modelo de Dominio (Simple)"]
-    HW[Homework]
-    TASKS["Tasks (Map / List en memoria)"]
+subgraph Providers["Providers y ViewModels MVVM"]
+    HP[HomeworkProvider]
+    PP[PreferencesProvider]
+    PRP[ProfileProvider]
+    QVM[QaViewModel]
 end
 
-%% =========================
-%% FRAMEWORK / EXTERNOS
-%% =========================
-subgraph Framework["Framework / Librerías"]
-    FLUTTER[Flutter Material]
-    CAL[TableCalendar]
+subgraph Services["Servicios"]
+    AUTH[AuthService]
+    NS[NotificationService]
+    PREFS[PreferencesService]
+    PFS[ProfileFirestoreService]
 end
 
-%% =========================
-%% RELACIONES
-%% =========================
+subgraph Firebase["Firebase"]
+    FAUTH[Firebase Auth]
+    FS[Firestore]
+end
 
-%% Screens usan widgets
-HS --> HC
-HS --> DW
-CS --> DW
-DS --> DW
-CDS --> DW
-PS --> DW
-AS --> DW
-HES --> DW
-SPL --> FLUTTER
+subgraph NativeOS["Ecosistema Nativo del Dispositivo"]
+    SHARE[share_plus]
+    NOTIF[Android Notification Manager]
+    EMAIL[Cliente de Correo]
+end
 
-%% Navegación
-HS --> NAV
-CS --> NAV
-DS --> NAV
-CDS --> NAV
-PS --> NAV
-AS --> NAV
-HES --> NAV
-NAV --> AR
+HS --> HP
+CS --> HP
+DS --> HP
+ES --> HP
+CDS --> HP
+PRS --> PP
+PRS --> NS
+PS --> PRP
+PS --> PFS
+QAS --> QVM
+QAS --> EMAIL
+DS --> SHARE
 
-%% Datos
-HS --> TASKS
-CDS --> TASKS
-TASKS --> HW
-
-%% Framework
-HS --> CAL
-HS --> FLUTTER
-CS --> FLUTTER
-DS --> FLUTTER
-CDS --> FLUTTER
-PS --> FLUTTER
-AS --> FLUTTER
-HES --> FLUTTER
+HP --> FS
+PP --> PREFS
+PRP --> PFS
+PFS --> FS
+AUTH --> FAUTH
+AG --> FAUTH
+NS --> NOTIF
 ```
+
 ---
+
 ## Diagrama de Secuencia
 
 ```mermaid
@@ -283,109 +300,103 @@ sequenceDiagram
 
 actor Usuario
 
-participant Home as HomeScreen
-participant CreateScreen as CrearTareaScreen
-participant Detail as DetailScreen
-participant Calendar as CalendarDetailScreen
-participant Store as TaskMemory
-participant Navigator as FlutterNavigator
+participant LoginScreen
+participant AuthGate
+participant HomeScreen
+participant CreateScreen
+participant DetailScreen
+participant Firestore
 
-%% =========================
-%% INICIO APP
-%% =========================
-Usuario->>Home: Abre aplicación
-Home->>Store: Cargar tareas en memoria
-Store-->>Home: Lista de tareas
-Home-->>Usuario: Renderiza UI
+Usuario->>LoginScreen: Ingresa credenciales
+LoginScreen->>Firestore: login o register
+Firestore-->>AuthGate: authStateChanges
+AuthGate->>HomeScreen: Redirige si autenticado
 
-%% =========================
-%% VER DETALLE
-%% =========================
-Usuario->>Home: Selecciona tarea
-Home->>Navigator: pushNamed('/detail', task)
-Navigator->>DetailScreen: Enviar argumentos
+HomeScreen->>Firestore: loadTasks()
+Firestore-->>HomeScreen: Lista de tareas
+HomeScreen-->>Usuario: Renderiza UI
+
+Usuario->>HomeScreen: Presiona el boton mas
+HomeScreen->>CreateScreen: Navega a formulario
+Usuario->>CreateScreen: Completa formulario
+CreateScreen->>Firestore: addTask()
+CreateScreen-->>HomeScreen: Retorna
+HomeScreen-->>Usuario: UI actualizada
+
+Usuario->>HomeScreen: Selecciona tarea
+HomeScreen->>DetailScreen: Navega al detalle
 DetailScreen-->>Usuario: Mostrar detalle
-
-%% =========================
-%% CREAR TAREA
-%% =========================
-Usuario->>Home: Presiona botón "+"
-Home->>Navigator: pushNamed('/create')
-Navigator->>CreateScreen: Abrir formulario
-
-Usuario->>CreateScreen: Ingresa datos
-CreateScreen->>Navigator: pop(newTask)
-Navigator->>Home: Retorna resultado
-
-Home->>Store: Agregar tarea
-Home-->>Usuario: UI actualizada
-
-%% =========================
-%% CALENDARIO
-%% =========================
-Usuario->>Home: Selecciona día
-Home->>Store: Filtrar por fecha
-Store-->>Home: Tareas del día
-Home->>Navigator: pushNamed('/calendar_detail', args)
-Navigator->>CalendarDetailScreen: Mostrar datos
-
-CalendarDetailScreen-->>Usuario: Mostrar lista
+Usuario->>DetailScreen: Presiona editar
+DetailScreen->>CreateScreen: Navega a edicion
 ```
+
 ---
+
 ## Diagrama de estados
 
 ```mermaid
 stateDiagram-v2
 
 [*] --> SplashScreen
+SplashScreen --> AuthGate: 2 segundos
 
-SplashScreen --> HomeScreen: App inicia
+state AuthGate {
+    [*] --> Verificando
+    Verificando --> LoginScreen: no autenticado
+    Verificando --> HomeScreen: autenticado
+}
+
+LoginScreen --> HomeScreen: login exitoso
 
 state HomeScreen {
     [*] --> Reposo
-
     Reposo --> CreateScreen: "+"
     Reposo --> DetailScreen: seleccionar tarea
-    Reposo --> CalendarScreen: abrir calendario
+    Reposo --> CalendarDetailScreen: seleccionar día en calendario
     Reposo --> ProfileScreen: drawer
+    Reposo --> PreferencesScreen: drawer
+    Reposo --> QaScreen: drawer
     Reposo --> HelpScreen: drawer
     Reposo --> AboutScreen: drawer
 }
 
-CreateScreen --> HomeScreen: guardar tarea
-DetailScreen --> HomeScreen: back
-CalendarScreen --> CalendarDetailScreen: seleccionar día
-CalendarDetailScreen --> HomeScreen: back
+DetailScreen --> EditScreen: editar
+EditScreen --> HomeScreen: guardar
+DetailScreen --> HomeScreen: eliminar / back
+CreateScreen --> HomeScreen: guardar / back
+CalendarDetailScreen --> DetailScreen: seleccionar tarea
 
-state NotificationPoC {
-    [*] --> Idle
-    Idle --> Permisos: inicialización plugin
-    Permisos --> Programada: scheduleNotification()
-    Programada --> Espera
-    Espera --> Disparada: Android OS
-    Disparada --> Mostrada
-}
-
-HomeScreen --> NotificationPoC: trigger desde UI
-NotificationPoC --> HomeScreen: retorno flujo
+HomeScreen --> LoginScreen: cerrar sesión
 ```
+
 ---
+
 ## Matriz de Dependencias Técnicas
 
 | Dominio de necesidad | Tecnología seleccionada | Justificación técnica |
-|----------------------|--------------------------|------------------------|
-| Gestión de notificaciones locales en dispositivo | flutter_local_notifications | Se adopta este plugin debido a su madurez en ecosistema Flutter, soporte activo y capacidad de abstracción sobre el Notification Manager nativo de Android/iOS. Permite programación de notificaciones síncronas y diferidas sin dependencia de servicios backend, reduciendo acoplamiento con infraestructura externa. |
-| Interfaz de usuario multiplataforma | Flutter (Material Design) | Framework oficial de Google que garantiza consistencia UI/UX entre Android e iOS. Su motor de renderizado propio reduce dependencia del sistema operativo, mejorando portabilidad y control del ciclo de vida de la UI. |
-| Gestión de estado de la aplicación | setState y datos en memoria | Se utiliza gestión de estado local simplificada adecuada para una maqueta funcional y pruebas de navegación entre pantallas. |
-| Arquitectura de lógica de negocio | Arquitectura modular basada en capas | Se separan responsabilidades entre pantallas, widgets reutilizables, rutas y servicios, permitiendo escalabilidad progresiva hacia arquitecturas más robustas como MVVM. |
-| Acceso a sistema operativo (notificaciones nativas) | Android Notification Manager | Componente nativo del sistema operativo responsable de la ejecución de notificaciones. Su uso indirecto mediante plugins permite mantener independencia del framework Flutter mientras se conserva acceso a capacidades del SO. |
-| Persistencia temporal de datos (modelo en memoria) | TaskModel en memoria | Se utiliza almacenamiento en memoria como decisión deliberada de PoC, eliminando dependencia de BaaS o bases de datos para enfocar la validación en la viabilidad de notificaciones asíncronas. |
+|---|---|---|
+| Autenticación de usuarios | Firebase Auth | Solución robusta y segura para autenticación con correo/contraseña, con gestión de sesión automática mediante streams. |
+| Persistencia de datos en la nube | Firebase Firestore | Base de datos NoSQL en tiempo real, integrada con Firebase Auth para seguridad por usuario. |
+| Notificaciones locales | flutter_local_notifications | Plugin maduro con soporte activo para Android/iOS, permite notificaciones programadas sin backend. |
+| Gestión de estado | Provider | Solución oficial recomendada por Flutter, liviana y adecuada para el tamaño del proyecto. |
+| Persistencia de preferencias | SharedPreferences | Almacenamiento clave-valor simple y eficiente para configuraciones locales del usuario. |
+| Interfaz de usuario | Flutter (Material Design) | Framework oficial de Google con motor de renderizado propio, garantiza consistencia UI/UX multiplataforma. |
+| Arquitectura | MVVM con Provider | Separación clara entre UI, lógica de negocio y datos, facilitando mantenimiento y escalabilidad. |
+| Envío de valorización | url_launcher | Permite abrir el cliente de correo nativo del dispositivo con contenido prellenado. |
+
+---
+
+## Investigación
+
+[RESEARCH.md](RESEARCH.md)
+
 ---
 
 ## Proof of Concept (PoC)
+
 La validación técnica de notificaciones locales fue desarrollada en la rama:
 
-feature/poc_notificaciones_locales
+`feature/poc_notificaciones_locales`
 
 Documentación completa disponible en:
 
@@ -395,7 +406,5 @@ Documentación completa disponible en:
 
 ## Autor
 
-Desarrollado por David Valdés Hernández  
+Desarrollado por David Valdés Hernández (DavidMarvel)  
 Proyecto académico — Programación de Dispositivos Móviles
-
----
