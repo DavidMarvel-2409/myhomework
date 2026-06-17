@@ -389,42 +389,43 @@ HomeScreen --> LoginScreen: cerrar sesión
 
 ### Resumen ejecutivo
 
-Se realizó una validación funcional con **12 usuarios reales**, quienes evaluaron la aplicación mediante un instrumento estructurado en JSON con 11 preguntas distribuidas en 3 categorías: Usabilidad, Contenido y Compartir. Las respuestas fueron enviadas por correo electrónico directamente desde la aplicación.
+Se realizó una validación funcional con **21 usuarios reales**, quienes evaluaron la aplicación mediante un instrumento estructurado en JSON con 11 preguntas distribuidas en 3 categorías: Usabilidad, Contenido y Compartir. Las respuestas fueron enviadas por correo electrónico directamente desde la aplicación.
 
 ### Resultados por categoría
 
 | Categoría | Promedio |
 |---|---|
-| Usabilidad | 4.65 / 5 |
-| Contenido | 4.67 / 5 |
-| Compartir y recomendación | 4.58 / 5 |
-| **Promedio general** | **4.63 / 5** |
+| Usabilidad | 4.70 / 5 |
+| Contenido | 4.75 / 5 |
+| Compartir y recomendación | 4.52 / 5 |
+| **Promedio general** | **4.65 / 5** |
 
 ### Resultados por pregunta
 
 | Pregunta | Promedio |
 |---|---|
-| Facilidad de navegación | 4.58 / 5 |
-| Completar tareas sin problemas | 4.67 / 5 |
-| Interfaz gráfica y claridad | 4.67 / 5 |
-| Personalización de preferencias | 4.67 / 5 |
-| Utilidad del contenido | 4.58 / 5 |
-| Adaptación a expectativas | 4.67 / 5 |
-| Claridad del contenido | 4.75 / 5 |
-| Probabilidad de recomendar la app | 4.33 / 5 |
-| Comodidad al compartir la app | 4.75 / 5 |
-| Utilidad para personas cercanas | 4.75 / 5 |
-| Satisfacción general | 4.50 / 5 |
+| Facilidad de navegación | 4.76 / 5 |
+| Completar tareas sin problemas | 4.71 / 5 |
+| Interfaz gráfica y claridad | 4.71 / 5 |
+| Personalización de preferencias | 4.62 / 5 |
+| Utilidad del contenido | 4.67 / 5 |
+| Adaptación a expectativas | 4.71 / 5 |
+| Claridad del contenido | 4.86 / 5 |
+| Probabilidad de recomendar la app | 4.29 / 5 |
+| Comodidad al compartir la app | 4.57 / 5 |
+| Utilidad para personas cercanas | 4.71 / 5 |
+| Satisfacción general | 4.52 / 5 |
 
 ### Qué funcionó bien
 
-- La **claridad del contenido** y la **comodidad al compartir** obtuvieron las puntuaciones más altas (4.75/5), lo que indica que la información está bien presentada y la funcionalidad de compartir tareas fue bien recibida.
-- La **usabilidad general** fue muy bien evaluada, con promedios sobre 4.6 en todas sus preguntas, lo que refleja que la navegación y el flujo de la app son intuitivos.
-- La **utilidad del contenido** y su adaptación a las expectativas del usuario resultaron consistentemente altas, validando que la propuesta de valor de la app es relevante para estudiantes.
+- La **claridad del contenido** (4.86/5) y la **facilidad de navegación** (4.76/5) obtuvieron las puntuaciones más altas, confirmando que la información está bien presentada y que el flujo de la app es intuitivo.
+- La categoría **Contenido** en general fue la mejor evaluada (4.75/5), validando que la propuesta de valor de la app es relevante para estudiantes.
+- La **usabilidad general** se mantuvo sólida en todas sus preguntas (sobre 4.6), reflejando consistencia en la experiencia de uso entre los 21 usuarios.
 
 ### Qué tuvo menor puntuación
 
-- La pregunta con menor promedio fue **"Probabilidad de recomendar la app a un amigo" (4.33/5)**, lo que sugiere que, si bien la experiencia es positiva, algunos usuarios dudan en recomendarla activamente, posiblemente por considerarla aún en desarrollo o por la falta de funcionalidades avanzadas.
+- La pregunta con menor promedio fue **"Probabilidad de recomendar la app a un amigo" (4.29/5)**, seguida de la **satisfacción general** (4.52/5) y la **comodidad al compartir la app** (4.57/5). En conjunto, esto indica que, si bien la experiencia individual es positiva, hay una menor disposición a recomendar o compartir activamente la aplicación.
+- Se observó un caso particular: un usuario calificó con 5/5 todas las preguntas de Usabilidad y Contenido, pero con 2-3/5 las preguntas de la categoría Compartir, lo que sugiere que la baja disposición a recomendar puede no estar relacionada con fallas técnicas, sino con la naturaleza personal de "compartir" o "recomendar" algo.
 
 ### Trabajos futuros (Deuda Técnica)
 
@@ -433,6 +434,7 @@ Se realizó una validación funcional con **12 usuarios reales**, quienes evalua
 - **Prioridad de tareas**: agregar niveles de prioridad (alta, media, baja) para una mejor organización.
 - **Modo oscuro**: mejorar la experiencia visual en condiciones de poca luz.
 - **Notificaciones más granulares**: permitir configurar con cuántos días de anticipación se desea recibir el recordatorio de una tarea.
+- **Incentivos para compartir**: considerar mejoras en la funcionalidad de compartir (por ejemplo, compartir resúmenes semanales o logros) para aumentar la disposición de los usuarios a recomendar la app.
 
 ---
 
